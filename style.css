@@ -1,0 +1,235 @@
+/* Genel Ayarlar */
+/* Genel Ayarlar ve Yıldızlı Arka Plan */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    color: #e0e0e0;
+    
+    /* 1. Temel Koyu Arka Plan Rengi */
+    background-color: #030712; /* Daha da koyu bir siyah-mavi */
+
+    /* 2. Yıldız Tarlası Efekti (Buraya Dikkat!) */
+    /* Bu radial-gradient'ler rastgele noktalardan oluşan bir doku yaratır */
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
+        radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 3px);
+    
+    /* Bu yıldızların boyutları ve pozisyonları */
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    
+    scroll-behavior: smooth;
+
+    /* 3. Işıldama Animasyonunu Başlat */
+    animation: backgroundTwinkle 5s ease-in-out infinite;
+}
+
+/* body::before'u temizleyelim (artık radial gradient'a ihtiyacımız yok) */
+body::before {
+    display: none;
+}
+
+/* Arka Planın Tamamının Işıldama Animasyonu */
+@keyframes backgroundTwinkle {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 0 transparent);
+    }
+    50% {
+        /* Yarı yolda hafifçe parlatırız, drop-shadow ile ışıltı veririz */
+        filter: brightness(1.1) drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+/* Navigasyon */
+header {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px); /* Cam efekti */
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #38bdf8;
+}
+
+/* Hero (Giriş) Bölümü ve Işıltılı Yazı */
+#hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle at top right, rgba(29, 78, 216, 0.15), transparent);
+}
+
+#hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #38bdf8, #818cf8); /* Işıltılı renk geçişi */
+    -webkit-background-clip: text;background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.5)); }
+    to { filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.8)); }
+}
+
+/* Kartlar ve Bölümler */
+section {
+    padding: 6rem 2rem; /* Üst boşluğu biraz artırdık (5rem'den 6rem'e) */
+    max-width: 900px;
+    margin: auto;
+    clear: both; /* Çakışmaları önler */
+}
+    /* Paragraf yazılarını görünür kılalım */
+section p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    display: block; /* Görünür olduğundan emin olalım */
+}
+
+.kart {
+    background: rgba(30, 41, 59, 0.5); /* Şeffaf koyu kartlar */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    transition: 0.3s ease;
+}
+
+.kart:hover {
+    border-color: #38bdf8;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Form ve Butonlar */
+form input, form textarea {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    padding: 12px;
+}
+
+form button {
+    background: linear-gradient(to right, #38bdf8, #1d4ed8);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Yıldız İkonunun Temel Stili */
+.yildiz-ikon {
+    font-size: 0.8em; /* Yazıdan biraz daha küçük olsun */
+    vertical-align: middle; /* Yazıyla aynı hizada dursun */
+    margin-left: 10px; /* Yazıyla arasında boşluk bırakalım */
+    color: #ffd700; /* Yıldızın ana rengi: Altın sarısı */
+    
+    /* Yanıp sönme animasyonunu bağlayalım */
+    animation: yanipSon 1.5s ease-in-out infinite; 
+}
+
+/* Yanıp Sönme Animasyonunun Tanımı (Keyframes) */
+@keyframes yanipSon {
+    0% {
+        opacity: 0.2; /* Başlangıçta çok sönük */
+        transform: scale(0.8); /* Hafifçe küçük */
+        filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5)); /* Hafif bir parıltı */
+    }
+    50% {
+        opacity: 1; /* Tam parlaklık */
+        transform: scale(1.1); /* Hafifçe büyür */
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 1)); /* Güçlü bir parıltı efekti */
+    }
+    100% {
+        opacity: 0.2; /* Tekrar sönükleşir */
+        transform: scale(0.8); /* Tekrar küçülür */
+        filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5)); /* Hafif parıltı */
+    }
+}
+
+#iletisim {
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+.iletisim-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.iletisim-item {
+    display: flex;
+    align-items: center;
+    background: rgba(30, 41, 59, 0.4); /* Şeffaf kart görünümü */
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s ease;
+}
+
+.iletisim-item:hover {
+    border-color: #38bdf8;
+    transform: translateX(10px);
+}
+
+.iletisim-item i {
+    font-size: 1.5rem;
+    color: #38bdf8;
+    margin-right: 20px;
+    width: 30px;
+    text-align: center;
+}
+
+.iletisim-item span {
+    font-weight: bold;
+    color: #94a3b8;
+    margin-right: 10px;
+    min-width: 80px;
+}
+
+.iletisim-item a {
+    color: #e0e0e0;
+    text-decoration: none; /* Alt çizgiyi kaldırır */
+    transition: 0.3s;
+}
+
+.iletisim-item a:hover {
+    color: #38bdf8;
+}
