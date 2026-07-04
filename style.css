@@ -5,81 +5,108 @@ body {
     line-height: 1.6;
     margin: 0;
     color: #e0e0e0;
-    
-    /* 1. Temel Koyu Arka Plan Rengi */
-    background-color: #030712; /* Daha da koyu bir siyah-mavi */
+    background-color: #030712; /* Temel koyu renk */
+    scroll-behavior: smooth;
+    position: relative;
+    overflow-x: hidden;
+}
 
-    /* 2. Yıldız Tarlası Efekti (Buraya Dikkat!) */
-    /* Bu radial-gradient'ler rastgele noktalardan oluşan bir doku yaratır */
+/* Yıldızlı Arka Plan Katmanı */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* İçeriğin arkasında kalması için */
+    
     background-image: 
         radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
         radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
         radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
         radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 3px);
     
-    /* Bu yıldızların boyutları ve pozisyonları */
     background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
     
-    scroll-behavior: smooth;
-
-    /* 3. Işıldama Animasyonunu Başlat */
-    animation: backgroundTwinkle 5s ease-in-out infinite;
+    animation: starsTwinkle 4s ease-in-out infinite;
 }
 
-/* body::before'u temizleyelim (artık radial gradient'a ihtiyacımız yok) */
-body::before {
-    display: none;
+/* Yıldızların Yanıp Sönme Efekti */
+@keyframes starsTwinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
-/* Arka Planın Tamamının Işıldama Animasyonu */
-@keyframes backgroundTwinkle {
-    0% {
-        filter: brightness(1) drop-shadow(0 0 0 transparent);
-    }
-    50% {
-        /* Yarı yolda hafifçe parlatırız, drop-shadow ile ışıltı veririz */
-        filter: brightness(1.1) drop-shadow(0 0 5px rgba(255,255,255,0.2));
-    }
-    100% {
-        filter: brightness(1);
-    }
-}
 /* Navigasyon */
 header {
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px); /* Cam efekti */
-    padding: 1rem 0;
     position: fixed;
     width: 100%;
-    top: 0;
+    top: 20px;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1300px; /* Daha geniş */
+    width: 92%;
     margin: auto;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(15px);
+    padding: 1.5rem 4rem; /* Daha uzunlamasına (yükseklik ve yan boşluklar arttı) */
+    border-radius: 25px; /* Daha modern bir dikdörtgenimsi form */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.6rem; /* Logo biraz daha büyüdü */
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
 }
 
 nav ul {
     display: flex;
     list-style: none;
+    gap: 30px; /* Linkler arası mesafe arttı */
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li a {
-    color: #94a3b8;
+    color: #cbd5e1;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 20px;
+    font-size: 1.05rem; /* Yazılar biraz daha belirgin */
+    padding: 10px 5px;
+    position: relative;
+    transition: 0.3s;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 15px;
+    background: #38bdf8;
     transition: 0.3s;
 }
 
 nav ul li a:hover {
-    color: #38bdf8;
+    color: #fff;
+}
+
+nav ul li a:hover::after {
+    width: calc(100% - 30px);
 }
 
 /* Hero (Giriş) Bölümü ve Işıltılı Yazı */
@@ -90,7 +117,9 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: radial-gradient(circle at top right, rgba(29, 78, 216, 0.15), transparent);
+    max-width: none;
+    width: 100%;
+    background: transparent; /* Mavi ışıltı efektini kaldırdık, sadece yıldızlı arka plan kalacak */
 }
 
 #hero h1 {
@@ -103,8 +132,8 @@ nav ul li a:hover {
 }
 
 @keyframes glow {
-    from { filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.5)); }
-    to { filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.8)); }
+    from { filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.3)); }
+    to { filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
 }
 
 /* Kartlar ve Bölümler */
@@ -122,6 +151,49 @@ section p {
     display: block; /* Görünür olduğundan emin olalım */
 }
 
+.proje-kartlari {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.yetenek-liste {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3'er 3'er alt alta dizilmesi için */
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.yetenek-kart {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.yetenek-kart:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: #38bdf8;
+    transform: translateY(-5px);
+}
+
+.yetenek-kart i {
+    font-size: 2rem;
+    color: #38bdf8;
+}
+
+.yetenek-kart span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #cbd5e1;
+}
+
 .kart {
     background: rgba(30, 41, 59, 0.5); /* Şeffaf koyu kartlar */
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -132,7 +204,6 @@ section p {
 
 .kart:hover {
     border-color: #38bdf8;
-    transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
@@ -188,48 +259,53 @@ form button {
 }
 
 .iletisim-liste {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
     margin-top: 30px;
 }
 
 .iletisim-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    background: rgba(30, 41, 59, 0.4); /* Şeffaf kart görünümü */
-    padding: 15px 25px;
-    border-radius: 12px;
+    justify-content: center;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 30px 20px;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: 0.3s ease;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    color: #e0e0e0;
 }
 
 .iletisim-item:hover {
     border-color: #38bdf8;
-    transform: translateX(10px);
+    transform: translateY(-10px);
+    background: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .iletisim-item i {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: #38bdf8;
-    margin-right: 20px;
-    width: 30px;
-    text-align: center;
-}
-
-.iletisim-item span {
-    font-weight: bold;
-    color: #94a3b8;
-    margin-right: 10px;
-    min-width: 80px;
-}
-
-.iletisim-item a {
-    color: #e0e0e0;
-    text-decoration: none; /* Alt çizgiyi kaldırır */
+    margin-bottom: 15px;
+    margin-right: 0; /* Reset previous margin */
     transition: 0.3s;
 }
 
-.iletisim-item a:hover {
-    color: #38bdf8;
+.iletisim-item:hover i {
+    transform: scale(1.2);
+    color: #fff;
+}
+
+.iletisim-item span {
+    font-weight: 500;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin-right: 0; /* Reset previous margin */
+}
+
+.iletisim-item:hover span {
+    color: #fff;
 }
